@@ -10,20 +10,18 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace CallMeMaybeClient
+namespace CallMeMaybeClient.Views
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
+
     public partial class MainWindow : Window
     {
         public MainWindow()
         {
             InitializeComponent();
-
-           ApiLink apiLink = new ApiLink();
-
-            apiLink.PingAsync();
+            MainFrame.Navigate(new SalariePage());
         }
     }
 }

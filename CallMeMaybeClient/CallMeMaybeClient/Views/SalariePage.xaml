@@ -1,0 +1,25 @@
+﻿<Page x:Class="CallMeMaybeClient.Views.SalariePage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:viewModels="clr-namespace:CallMeMaybeClient.ViewsModels"
+      Title="Liste des salariés">
+    <Page.DataContext>
+        <viewModels:SalarieViewModel />
+    </Page.DataContext>
+
+    <Grid>
+        <DataGrid ItemsSource="{Binding Salaries}" AutoGenerateColumns="False">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Nom" Binding="{Binding Nom}" />
+                <DataGridTextColumn Header="Prénom" Binding="{Binding Prenom}" />
+                <DataGridTextColumn Header="Téléphone Fixe" Binding="{Binding TelFixe}" />
+                <DataGridTextColumn Header="Téléphone Mobile" Binding="{Binding TelMobile}" />
+                <DataGridTextColumn Header="Email" Binding="{Binding Email}" />
+                <DataGridTextColumn Header="Service" Binding="{Binding Service}" />
+                <DataGridTextColumn Header="Site" Binding="{Binding Site}" />
+            </DataGrid.Columns>
+        </DataGrid>
+    </Grid>
+</Page>
+        
+
