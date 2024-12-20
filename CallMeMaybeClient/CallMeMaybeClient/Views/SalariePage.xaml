@@ -10,13 +10,13 @@
     <Grid>
         <DataGrid ItemsSource="{Binding Salaries}" AutoGenerateColumns="False">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Nom" Binding="{Binding Nom}" />
-                <DataGridTextColumn Header="Prénom" Binding="{Binding Prenom}" />
-                <DataGridTextColumn Header="Téléphone Fixe" Binding="{Binding TelFixe}" />
-                <DataGridTextColumn Header="Téléphone Mobile" Binding="{Binding TelMobile}" />
-                <DataGridTextColumn Header="Email" Binding="{Binding Email}" />
-                <DataGridTextColumn Header="Service" Binding="{Binding Service}" />
-                <DataGridTextColumn Header="Site" Binding="{Binding Site}" />
+                <DataGridTextColumn Header="Nom" Binding="{Binding nom}" />
+                <DataGridTextColumn Header="Prénom" Binding="{Binding prenom}" />
+                <DataGridTextColumn Header="Téléphone Fixe" Binding="{Binding telFixe}" />
+                <DataGridTextColumn Header="Téléphone Mobile" Binding="{Binding telMobile}" />
+                <DataGridTextColumn Header="Email" Binding="{Binding email}" />
+                <DataGridTextColumn Header="Service" Binding="{Binding service}" />
+                <DataGridTextColumn Header="Site" Binding="{Binding site}" />
             </DataGrid.Columns>
         </DataGrid>
     </Grid>

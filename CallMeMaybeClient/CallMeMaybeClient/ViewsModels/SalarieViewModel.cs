@@ -59,7 +59,7 @@ namespace CallMeMaybeClient.ViewsModels
             try
             {
                 using HttpClient client = new HttpClient();
-                HttpResponseMessage response = await client.GetAsync("https://example.com/api/salaries");
+                HttpResponseMessage response = await client.GetAsync("http://localhost:5164/api/salarie/get/all");
                 response.EnsureSuccessStatusCode();
 
                 string json = await response.Content.ReadAsStringAsync();
@@ -86,7 +86,7 @@ namespace CallMeMaybeClient.ViewsModels
             else
             {
                 Salaries = new ObservableCollection<Salarie>(
-                    _salaries.Where(s => s.Nom.Contains(SearchText, StringComparison.OrdinalIgnoreCase))
+                    _salaries.Where(s => s.nom.Contains(SearchText, StringComparison.OrdinalIgnoreCase))
                 );
             }
         }
