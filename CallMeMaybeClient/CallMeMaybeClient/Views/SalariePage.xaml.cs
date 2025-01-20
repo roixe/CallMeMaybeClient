@@ -1,4 +1,5 @@
-﻿using System.Windows.Controls;
+﻿using CallMeMaybeClient.ViewsModels;
+using System.Windows.Controls;
 
 namespace CallMeMaybeClient.Views
 {
@@ -6,7 +7,9 @@ namespace CallMeMaybeClient.Views
     {
         public SalariePage()
         {
+           
             InitializeComponent();
+            this.DataContext = new SalarieViewModel();
         }
     }
 }

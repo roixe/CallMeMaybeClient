@@ -1,25 +1,69 @@
 ﻿<Page x:Class="CallMeMaybeClient.Views.SalariePage"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-      xmlns:viewModels="clr-namespace:CallMeMaybeClient.ViewsModels"
+      xmlns:local="clr-namespace:CallMeMaybeClient.ViewsModels"
       Title="Liste des salariés">
-    <Page.DataContext>
-        <viewModels:SalarieViewModel />
-    </Page.DataContext>
 
-    <Grid>
-        <DataGrid ItemsSource="{Binding Salaries}" AutoGenerateColumns="False">
-            <DataGrid.Columns>
-                <DataGridTextColumn Header="Nom" Binding="{Binding nom}" />
-                <DataGridTextColumn Header="Prénom" Binding="{Binding prenom}" />
-                <DataGridTextColumn Header="Téléphone Fixe" Binding="{Binding telFixe}" />
-                <DataGridTextColumn Header="Téléphone Mobile" Binding="{Binding telMobile}" />
-                <DataGridTextColumn Header="Email" Binding="{Binding email}" />
-                <DataGridTextColumn Header="Service" Binding="{Binding service}" />
-                <DataGridTextColumn Header="Site" Binding="{Binding site}" />
-            </DataGrid.Columns>
-        </DataGrid>
+    <Page.Resources>
+        <SolidColorBrush x:Key="PrimaryYellow" Color="#FFEB3B"/>
+        <SolidColorBrush x:Key="AccentWhite" Color="#FFFFFF"/>
+        <Style TargetType="DataGrid">
+            <Setter Property="GridLinesVisibility" Value="Horizontal"/>
+            <Setter Property="HeadersVisibility" Value="Column"/>
+            <Setter Property="BorderBrush" Value="{StaticResource PrimaryYellow}"/>
+            <Setter Property="RowBackground" Value="{StaticResource AccentWhite}"/>
+            <Setter Property="AlternatingRowBackground" Value="#FFF9F9F9"/>
+        </Style>
+        <Style TargetType="Button">
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Background" Value="{StaticResource PrimaryYellow}"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Padding" Value="10,5"/>
+            <Setter Property="BorderBrush" Value="Transparent"/>
+            <Setter Property="Margin" Value="5"/>
+        </Style>
+    </Page.Resources>
+
+    <Grid Background="{StaticResource AccentWhite}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <Border Background="{StaticResource PrimaryYellow}" Padding="10">
+            <TextBlock Text="Liste des salariés"
+                       FontSize="24"
+                       FontWeight="Bold"
+                       Foreground="White"
+                       VerticalAlignment="Center"/>
+        </Border>
+
+        <Grid Grid.Row="1" Margin="20">
+            <DataGrid ItemsSource="{Binding Salaries}"
+                      AutoGenerateColumns="False"
+                      CanUserAddRows="False"
+                      IsReadOnly="True"
+                      HorizontalGridLinesBrush="#DDDDDD"
+                      VerticalGridLinesBrush="#DDDDDD"
+                      ColumnHeaderHeight="30"
+                      RowHeight="35">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Nom" Binding="{Binding nom}" Width="*" />
+                    <DataGridTextColumn Header="Prénom" Binding="{Binding prenom}" Width="*" />
+                    <DataGridTextColumn Header="Téléphone Fixe" Binding="{Binding telFixe}" Width="*" />
+                    <DataGridTextColumn Header="Téléphone Mobile" Binding="{Binding telMobile}" Width="*" />
+                    <DataGridTextColumn Header="Email" Binding="{Binding email}" Width="*" />
+                    <DataGridTextColumn Header="Service" Binding="{Binding serviceNom}" Width="*" />
+                    <DataGridTextColumn Header="Site" Binding="{Binding villeNom}" Width="*" />
+                </DataGrid.Columns>
+            </DataGrid>
+        </Grid>
+
+        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="10">
+            <Button Content="Ajouter" Width="100"/>
+            <Button Content="Modifier" Width="100"/>
+            <Button Content="Supprimer" Width="100"/>
+        </StackPanel>
     </Grid>
 </Page>
-        
-

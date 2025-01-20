@@ -19,6 +19,6 @@ namespace CallMeMaybeClient.Models
 
         // Navigation properties 
         public string serviceNom { get; set; }
-        public string siteNom { get; set; }
+        public string villeNom { get; set; }
     }
 }
