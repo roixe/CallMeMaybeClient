@@ -12,6 +12,7 @@ namespace CallMeMaybeClient.ViewsModels
     public class SalarieViewModel : INotifyPropertyChanged
     {
         private ObservableCollection<Salarie> _salaries;
+        private List<Salarie> _allSalaries;
         private string _searchText;
         private bool _isLoading;
 
@@ -63,13 +64,14 @@ namespace CallMeMaybeClient.ViewsModels
                 response.EnsureSuccessStatusCode();
 
                 string json = await response.Content.ReadAsStringAsync();
-                var salaries = JsonSerializer.Deserialize<ObservableCollection<Salarie>>(json);
+                var salaries = JsonSerializer.Deserialize<List<Salarie>>(json);
 
-                Salaries = salaries ?? new ObservableCollection<Salarie>();
+                _allSalaries = salaries ?? new List<Salarie>();
+                Salaries = new ObservableCollection<Salarie>(_allSalaries);
             }
             catch
             {
-                // Gérer les erreurs (ex : afficher un message d'erreur)
+               
             }
             finally
             {
@@ -81,15 +83,22 @@ namespace CallMeMaybeClient.ViewsModels
         {
             if (string.IsNullOrWhiteSpace(SearchText))
             {
-                _ = LoadDataAsync(); // Recharger toutes les données
+                // Si aucune recherche, restaurer toutes les données
+                Salaries = new ObservableCollection<Salarie>(_allSalaries);
             }
             else
             {
+                // Filtrer par nom, service ou ville
                 Salaries = new ObservableCollection<Salarie>(
-                    _salaries.Where(s => s.nom.Contains(SearchText, StringComparison.OrdinalIgnoreCase))
+                    _allSalaries.Where(s =>
+                        (s.nom != null && s.nom.Contains(SearchText, StringComparison.OrdinalIgnoreCase)) ||
+                        (s.serviceNom != null && s.serviceNom.Contains(SearchText, StringComparison.OrdinalIgnoreCase)) ||
+                        (s.villeNom != null && s.villeNom.Contains(SearchText, StringComparison.OrdinalIgnoreCase))
+                    )
                 );
             }
         }
+
 
         public event PropertyChangedEventHandler PropertyChanged;
 
