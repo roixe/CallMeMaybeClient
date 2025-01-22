@@ -1,110 +1,149 @@
 ﻿using CallMeMaybeClient.Models;
+using CallMeMaybeClient.ViewsModels;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
 using System.Net.Http;
 using System.Text.Json;
-using System.Threading.Tasks;
+using System.Windows.Input;
+using System.Windows;
 
-
-namespace CallMeMaybeClient.ViewsModels
+public class SalarieViewModel : BaseViewModel
 {
+    private ObservableCollection<Salarie> _salaries;
+    private List<Salarie> _allSalaries;
+    private Salarie _selectedSalarie;
+    private string _searchText;
+    private bool _isLoading;
 
-    public class SalarieViewModel : INotifyPropertyChanged
+    public ObservableCollection<Salarie> Salaries
     {
-        private ObservableCollection<Salarie> _salaries;
-        private List<Salarie> _allSalaries;
-        private string _searchText;
-        private bool _isLoading;
-
-        public ObservableCollection<Salarie> Salaries
+        get => _salaries;
+        set
         {
-            get => _salaries;
-            set
-            {
-                _salaries = value;
-                OnPropertyChanged();
-            }
+            _salaries = value;
+            OnPropertyChanged();
         }
+    }
 
-        public string SearchText
+    public Salarie SelectedSalarie
+    {
+        get => _selectedSalarie;
+        set
         {
-            get => _searchText;
-            set
-            {
-                _searchText = value;
-                OnPropertyChanged();
-                PerformSearch();
-            }
+            _selectedSalarie = value;
+            OnPropertyChanged();
+            (DeleteCommand as RelayCommand)?.RaiseCanExecuteChanged();
+
         }
+    }
 
-        public bool IsLoading
+    public string SearchText
+    {
+        get => _searchText;
+        set
         {
-            get => _isLoading;
-            set
-            {
-                _isLoading = value;
-                OnPropertyChanged();
-            }
+            _searchText = value;
+            OnPropertyChanged();
+            PerformSearch();
         }
+    }
 
-        public SalarieViewModel()
+    public bool IsLoading
+    {
+        get => _isLoading;
+        set
         {
-            // Charger les données au démarrage
-            _ = LoadDataAsync();
+            _isLoading = value;
+            OnPropertyChanged();
         }
+    }
 
-        public async Task LoadDataAsync()
+    public ICommand DeleteCommand { get; }
+
+    public SalarieViewModel()
+    {
+        _ = LoadDataAsync();
+        DeleteCommand = new RelayCommand(async () => await OnDelete(), CanDelete);
+    }
+
+    public async Task LoadDataAsync()
+    {
+        IsLoading = true;
+        try
         {
-            IsLoading = true;
+            using HttpClient client = new HttpClient();
+            HttpResponseMessage response = await client.GetAsync("http://localhost:5164/api/salarie/get/all");
+            response.EnsureSuccessStatusCode();
+            string json = await response.Content.ReadAsStringAsync();
+            var salaries = JsonSerializer.Deserialize<List<Salarie>>(json);
+            _allSalaries = salaries ?? new List<Salarie>();
+            Salaries = new ObservableCollection<Salarie>(_allSalaries);
+        }
+        catch
+        {
+        }
+        finally
+        {
+            IsLoading = false;
+        }
+    }
 
+    private async Task OnDelete()
+    {
+        if (SelectedSalarie == null)
+            return;
+
+        var result = MessageBox.Show($"Voulez-vous vraiment supprimer {SelectedSalarie.nom} {SelectedSalarie.prenom} ?",
+            "Confirmation", MessageBoxButton.YesNo, MessageBoxImage.Warning);
+
+        if (result == MessageBoxResult.Yes)
+        {
             try
             {
                 using HttpClient client = new HttpClient();
-                HttpResponseMessage response = await client.GetAsync("http://localhost:5164/api/salarie/get/all");
-                response.EnsureSuccessStatusCode();
+                HttpResponseMessage response = await client.DeleteAsync($"http://localhost:5164/api/salarie/delete/{SelectedSalarie.id}");
+                if (response.IsSuccessStatusCode)
+                {
+                    _allSalaries.Remove(SelectedSalarie);
+                    _allSalaries = _allSalaries ?? new List<Salarie>();
+                    Salaries = new ObservableCollection<Salarie>(_allSalaries);
 
-                string json = await response.Content.ReadAsStringAsync();
-                var salaries = JsonSerializer.Deserialize<List<Salarie>>(json);
+                    MessageBox.Show("Salarié supprimé avec succès.", "Succès", MessageBoxButton.OK, MessageBoxImage.Information);
+                }
+                else if (SelectedSalarie.id == 0)
+                {
+                    MessageBox.Show("ID =0","Erreur", MessageBoxButton.OK, MessageBoxImage.Error);
 
-                _allSalaries = salaries ?? new List<Salarie>();
-                Salaries = new ObservableCollection<Salarie>(_allSalaries);
+                }
+
+                else
+                {
+                    MessageBox.Show("Erreur lors de la suppression.", "Erreur ", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
             }
-            catch
+            catch (Exception ex)
             {
-               
-            }
-            finally
-            {
-                IsLoading = false;
+                MessageBox.Show($"Erreur : {ex.Message}", "Erreur", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
+    }
 
-        private void PerformSearch()
+    private void PerformSearch()
+    {
+        if (string.IsNullOrWhiteSpace(SearchText))
         {
-            if (string.IsNullOrWhiteSpace(SearchText))
-            {
-                // Si aucune recherche, restaurer toutes les données
-                Salaries = new ObservableCollection<Salarie>(_allSalaries);
-            }
-            else
-            {
-                // Filtrer par nom, service ou ville
-                Salaries = new ObservableCollection<Salarie>(
-                    _allSalaries.Where(s =>
-                        (s.nom != null && s.nom.Contains(SearchText, StringComparison.OrdinalIgnoreCase)) ||
-                        (s.serviceNom != null && s.serviceNom.Contains(SearchText, StringComparison.OrdinalIgnoreCase)) ||
-                        (s.villeNom != null && s.villeNom.Contains(SearchText, StringComparison.OrdinalIgnoreCase))
-                    )
-                );
-            }
+            Salaries = new ObservableCollection<Salarie>(_allSalaries);
         }
-
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        protected void OnPropertyChanged(string propertyName = null)
+        else
         {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            Salaries = new ObservableCollection<Salarie>(_allSalaries.Where(s =>
+                (s.nom != null && s.nom.Contains(SearchText, StringComparison.OrdinalIgnoreCase)) ||
+                (s.serviceNom != null && s.serviceNom.Contains(SearchText, StringComparison.OrdinalIgnoreCase)) ||
+                (s.villeNom != null && s.villeNom.Contains(SearchText, StringComparison.OrdinalIgnoreCase))
+            ));
         }
+    }
+    private bool CanDelete()
+    {
+        return SelectedSalarie != null;
     }
 }

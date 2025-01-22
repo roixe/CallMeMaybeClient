@@ -1,5 +1,6 @@
 ﻿using CallMeMaybeClient.ViewsModels;
 using System.Windows.Controls;
+using CallMeMaybeClient;
 
 namespace CallMeMaybeClient.Views
 {

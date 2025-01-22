@@ -2,15 +2,19 @@
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:local="clr-namespace:CallMeMaybeClient.ViewsModels"
+      xmlns:conv="clr-namespace:CallMeMaybeClient.Converters"
       Title="Liste des salariés">
 
     <Page.Resources>
+        
+        <conv:IsNullToBoolConverter x:Key="IsNullToBoolConverter" />
         <!-- Couleurs principales -->
         <SolidColorBrush x:Key="PrimaryYellow" Color="#FFC107"/>
         <SolidColorBrush x:Key="AccentWhite" Color="#FFFFFF"/>
         <SolidColorBrush x:Key="AccentGray" Color="#F5F5F5"/>
         <SolidColorBrush x:Key="TextDark" Color="#212121"/>
         <SolidColorBrush x:Key="TextLight" Color="#757575"/>
+
 
         <!-- Style global pour les boutons -->
         <Style TargetType="Button">
@@ -92,12 +96,14 @@
         <!-- Tableau -->
         <Grid Grid.Row="2" Margin="20" Background="White">
             <DataGrid ItemsSource="{Binding Salaries}"
+                      SelectedItem="{Binding SelectedSalarie, Mode=TwoWay}"
                       AutoGenerateColumns="False"
-                      CanUserAddRows="False"
-                      IsReadOnly="True"
+                      CanUserAddRows="True"
+                      IsReadOnly="False"
                       HorizontalScrollBarVisibility="Auto"
                       VerticalScrollBarVisibility="Auto">
                 <DataGrid.Columns>
+                    <DataGridTextColumn Header="Nom" Binding="{Binding id}" Width="*" />
                     <DataGridTextColumn Header="Nom" Binding="{Binding nom}" Width="*" />
                     <DataGridTextColumn Header="Prénom" Binding="{Binding prenom}" Width="*" />
                     <DataGridTextColumn Header="Téléphone Fixe" Binding="{Binding telFixe}" Width="*" />
@@ -113,7 +119,7 @@
         <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Right" Margin="20">
             <Button Content="Ajouter" Width="120" Height="40"/>
             <Button Content="Modifier" Width="120" Height="40"/>
-            <Button Content="Supprimer" Width="120" Height="40"/>
+            <Button Content="Supprimer" Command="{Binding DeleteCommand}" Width="120" IsEnabled="{Binding SelectedSalarie, Converter={StaticResource IsNullToBoolConverter}}" />
         </StackPanel>
     </Grid>
 </Page>
