@@ -98,19 +98,19 @@
             <DataGrid ItemsSource="{Binding Salaries}"
                       SelectedItem="{Binding SelectedSalarie, Mode=TwoWay}"
                       AutoGenerateColumns="False"
-                      CanUserAddRows="True"
-                      IsReadOnly="False"
+                      CanUserAddRows="False"
+                      IsReadOnly="False"                       
+                      RowEditEnding="DataGrid_RowEditEnding"
                       HorizontalScrollBarVisibility="Auto"
                       VerticalScrollBarVisibility="Auto">
                 <DataGrid.Columns>
-                    <DataGridTextColumn Header="Nom" Binding="{Binding id}" Width="*" />
-                    <DataGridTextColumn Header="Nom" Binding="{Binding nom}" Width="*" />
-                    <DataGridTextColumn Header="Prénom" Binding="{Binding prenom}" Width="*" />
-                    <DataGridTextColumn Header="Téléphone Fixe" Binding="{Binding telFixe}" Width="*" />
-                    <DataGridTextColumn Header="Téléphone Mobile" Binding="{Binding telMobile}" Width="*" />
-                    <DataGridTextColumn Header="Email" Binding="{Binding email}" Width="*" />
-                    <DataGridTextColumn Header="Service" Binding="{Binding serviceNom}" Width="*" />
-                    <DataGridTextColumn Header="Site" Binding="{Binding villeNom}" Width="*" />
+                    <DataGridTextColumn Header="Nom" Binding="{Binding nom, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="*" />
+                    <DataGridTextColumn Header="Prénom" Binding="{Binding prenom, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="*" />
+                    <DataGridTextColumn Header="Téléphone Fixe" Binding="{Binding telFixe, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="*" />
+                    <DataGridTextColumn Header="Téléphone Mobile" Binding="{Binding telMobile, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="*" />
+                    <DataGridTextColumn Header="Email" Binding="{Binding email, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="*" />
+                    <DataGridTextColumn Header="Service" Binding="{Binding serviceNom, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="*" />
+                    <DataGridTextColumn Header="Site" Binding="{Binding villeNom, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="*" />
                 </DataGrid.Columns>
             </DataGrid>
         </Grid>

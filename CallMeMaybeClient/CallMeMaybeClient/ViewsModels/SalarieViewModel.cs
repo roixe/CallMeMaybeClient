@@ -5,6 +5,8 @@ using System.Net.Http;
 using System.Text.Json;
 using System.Windows.Input;
 using System.Windows;
+using System.Net.Http.Json;
+using System.Windows.Controls;
 
 public class SalarieViewModel : BaseViewModel
 {
@@ -126,6 +128,8 @@ public class SalarieViewModel : BaseViewModel
             }
         }
     }
+
+
 
     private void PerformSearch()
     {
