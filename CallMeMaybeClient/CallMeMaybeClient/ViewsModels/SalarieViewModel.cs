@@ -11,6 +11,10 @@ using System.Windows.Controls;
 public class SalarieViewModel : BaseViewModel
 {
     private ObservableCollection<Salarie> _salaries;
+    private ObservableCollection<Service> _services;
+    private ObservableCollection<Site> _sites;
+    private List<Site> _sitesList;
+    private List<Service> _servicesList;
     private List<Salarie> _allSalaries;
     private Salarie _selectedSalarie;
     private string _searchText;
@@ -22,6 +26,26 @@ public class SalarieViewModel : BaseViewModel
         set
         {
             _salaries = value;
+            OnPropertyChanged();
+        }
+    }
+
+    public ObservableCollection<Service> Services
+    {
+        get => _services;
+        set
+        {
+            _services = value;
+            OnPropertyChanged();
+        }
+    }
+
+    public ObservableCollection<Site> Sites
+    {
+        get => _sites;
+        set
+        {
+            _sites = value;
             OnPropertyChanged();
         }
     }
@@ -63,6 +87,9 @@ public class SalarieViewModel : BaseViewModel
 
     public SalarieViewModel()
     {
+        Services = new ObservableCollection<Service>();
+        Sites = new ObservableCollection<Site>();
+
         _ = LoadDataAsync();
         DeleteCommand = new RelayCommand(async () => await OnDelete(), CanDelete);
     }
@@ -73,15 +100,35 @@ public class SalarieViewModel : BaseViewModel
         try
         {
             using HttpClient client = new HttpClient();
-            HttpResponseMessage response = await client.GetAsync("http://localhost:5164/api/salarie/get/all");
-            response.EnsureSuccessStatusCode();
-            string json = await response.Content.ReadAsStringAsync();
-            var salaries = JsonSerializer.Deserialize<List<Salarie>>(json);
+
+            // Charger les salariés
+            HttpResponseMessage salariesResponse = await client.GetAsync("http://localhost:5164/api/salarie/get/all");
+            salariesResponse.EnsureSuccessStatusCode();
+            string salariesJson = await salariesResponse.Content.ReadAsStringAsync();
+            var salaries = JsonSerializer.Deserialize<List<Salarie>>(salariesJson);
             _allSalaries = salaries ?? new List<Salarie>();
             Salaries = new ObservableCollection<Salarie>(_allSalaries);
+
+            // Charger les services
+            HttpResponseMessage servicesResponse = await client.GetAsync("http://localhost:5164/api/service/get/all");
+            servicesResponse.EnsureSuccessStatusCode();
+            string servicesJson = await servicesResponse.Content.ReadAsStringAsync();
+            var services = JsonSerializer.Deserialize<List<Service>>(servicesJson);
+            _servicesList = services ?? new List<Service>();
+            Services = new ObservableCollection<Service>(services ?? new List<Service>());
+
+            // Charger les sites
+            HttpResponseMessage sitesResponse = await client.GetAsync("http://localhost:5164/api/site/get/all");
+            sitesResponse.EnsureSuccessStatusCode();
+            string sitesJson = await sitesResponse.Content.ReadAsStringAsync();
+            var sites = JsonSerializer.Deserialize<List<Site>>(sitesJson);
+            _sitesList = sites ?? new List<Site>();
+            Sites = new ObservableCollection<Site>(sites ?? new List<Site>());
         }
-        catch
+        catch (Exception ex)
         {
+            // Gérer les erreurs (ajoutez éventuellement des logs ou affichez un message d'erreur)
+            MessageBox.Show($"Erreur lors du chargement des données : {ex.Message}", "Erreur", MessageBoxButton.OK, MessageBoxImage.Error);
         }
         finally
         {

@@ -7,6 +7,8 @@ using System.Windows;
 using System.Windows.Input;
 using CallMeMaybeClient.Services;
 using System.Collections.ObjectModel;
+using CallMeMaybeClient.ViewsModels;
+using CallMeMaybeClient.Views;
 
 namespace CallMeMaybeClient.ViewsModels
 {
@@ -28,6 +30,8 @@ namespace CallMeMaybeClient.ViewsModels
         }
 
         private ObservableCollection<Site> _sites;
+
+
         public ObservableCollection<Site> Sites
         {
             get => _sites;
@@ -89,6 +93,7 @@ namespace CallMeMaybeClient.ViewsModels
             }
         }
 
+
         private async Task CreerSalarie()
         {
             try
@@ -104,6 +109,9 @@ namespace CallMeMaybeClient.ViewsModels
                 if (response.IsSuccessStatusCode)
                 {
                     MessageBox.Show("Le salarié a été créé avec succès !");
+
+                    
+
                 }
                 else
                 {

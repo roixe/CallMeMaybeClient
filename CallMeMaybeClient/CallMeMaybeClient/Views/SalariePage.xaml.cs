@@ -9,10 +9,26 @@ namespace CallMeMaybeClient.Views
 {
     public partial class SalariePage : Page
     {
+        private SalarieViewModel _viewModel;
         public SalariePage()
         {
             InitializeComponent();
-            this.DataContext = new SalarieViewModel();  
+            _viewModel = new SalarieViewModel();
+            this.DataContext = _viewModel;
+        }
+
+        private async void DataGrid_RowEditEnding(object sender, DataGridRowEditEndingEventArgs e)
+        {
+            if (e.Row.Item is Salarie salarie)
+            {
+                await UpdateSalarieAsync(salarie);
+            }
+        }
+
+        private async void Refresh_Click(object sender, RoutedEventArgs e)
+        {
+            // Appeler la méthode LoadDataAsync pour recharger les salariés
+            await _viewModel.LoadDataAsync();
         }
 
         private void AjouterButton_Click(object sender, RoutedEventArgs e)
@@ -22,14 +38,6 @@ namespace CallMeMaybeClient.Views
 
             // Ouvrir la fenêtre
             nouvelleFenetre.ShowDialog();
-        }
-
-        private async void DataGrid_RowEditEnding(object sender, DataGridRowEditEndingEventArgs e)
-        {
-            if (e.Row.Item is Salarie salarie)
-            {
-                await UpdateSalarieAsync(salarie);
-            }
         }
 
         private async Task UpdateSalarieAsync(Salarie salarie)

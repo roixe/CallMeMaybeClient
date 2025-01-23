@@ -25,6 +25,16 @@ namespace CallMeMaybeClient.Views
             InitializeComponent();
             this.DataContext = new AddSalarieViewModel();
 
+
+
+        }
+        private void AjouterButton_Click(object sender, RoutedEventArgs e)
+        {
+            // Instancier la nouvelle fenêtre
+            var nouvelleFenetre = new AddSalarieWindow();
+
+            // Ouvrir la fenêtre
+            nouvelleFenetre.ShowDialog();
         }
 
 

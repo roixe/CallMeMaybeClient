@@ -6,7 +6,7 @@
       Title="Liste des salariés">
 
     <Page.Resources>
-        
+
         <conv:IsNullToBoolConverter x:Key="IsNullToBoolConverter" />
         <!-- Couleurs principales -->
         <SolidColorBrush x:Key="PrimaryYellow" Color="#FFC107"/>
@@ -14,7 +14,9 @@
         <SolidColorBrush x:Key="AccentGray" Color="#F5F5F5"/>
         <SolidColorBrush x:Key="TextDark" Color="#212121"/>
         <SolidColorBrush x:Key="TextLight" Color="#757575"/>
-
+   
+         <CollectionViewSource x:Key="Owners" Source="{Binding Services}"/>
+        <CollectionViewSource x:Key="OwnersSite" Source="{Binding Sites}"/>
 
         <!-- Style global pour les boutons -->
         <Style TargetType="Button">
@@ -57,6 +59,7 @@
             </Setter>
         </Style>
     </Page.Resources>
+
 
     <Grid Background="{StaticResource AccentGray}">
         <Grid.RowDefinitions>
@@ -109,17 +112,33 @@
                     <DataGridTextColumn Header="Téléphone Fixe" Binding="{Binding telFixe, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="*" />
                     <DataGridTextColumn Header="Téléphone Mobile" Binding="{Binding telMobile, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="*" />
                     <DataGridTextColumn Header="Email" Binding="{Binding email, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="*" />
-                    <DataGridTextColumn Header="Service" Binding="{Binding serviceNom, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="*" />
-                    <DataGridTextColumn Header="Site" Binding="{Binding villeNom, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="*" />
+                    <DataGridComboBoxColumn Header="Service"
+                        SelectedValueBinding="{Binding idService, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                        SelectedValuePath="id"
+                        DisplayMemberPath="nom"
+                        ItemsSource="{Binding Source={StaticResource Owners}}"
+                        Width="*"/>
+
+
+                    <!-- Site (ComboBox) -->
+                    <DataGridComboBoxColumn Header="Site"
+                                    SelectedValueBinding="{Binding idSite, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                    SelectedValuePath="id"
+                                    DisplayMemberPath="ville"
+                                    ItemsSource="{Binding Source={StaticResource OwnersSite}}"
+                                    Width="*" />
                 </DataGrid.Columns>
             </DataGrid>
         </Grid>
 
         <!-- Boutons -->
         <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Right" Margin="20">
+            <Button Content="Rafraîchir" Width="120" Height="40" HorizontalAlignment="Center" VerticalAlignment="Center" Click="Refresh_Click"/>
             <Button Content="Ajouter" Width="120" Height="40" Click="AjouterButton_Click"/>
             <Button Content="Modifier" Width="120" Height="40"/>
             <Button Content="Supprimer" Command="{Binding DeleteCommand}" Width="120" IsEnabled="{Binding SelectedSalarie, Converter={StaticResource IsNullToBoolConverter}}" />
         </StackPanel>
+
+
     </Grid>
 </Page>
