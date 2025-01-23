@@ -15,6 +15,15 @@ namespace CallMeMaybeClient.Views
             this.DataContext = new SalarieViewModel();  
         }
 
+        private void AjouterButton_Click(object sender, RoutedEventArgs e)
+        {
+            // Instancier la nouvelle fenêtre
+            var nouvelleFenetre = new AddSalarieWindow();
+
+            // Ouvrir la fenêtre
+            nouvelleFenetre.ShowDialog();
+        }
+
         private async void DataGrid_RowEditEnding(object sender, DataGridRowEditEndingEventArgs e)
         {
             if (e.Row.Item is Salarie salarie)

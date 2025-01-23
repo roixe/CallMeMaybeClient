@@ -8,7 +8,7 @@ namespace CallMeMaybeClient.Models
 {
     public class Service
     {
-        public int Id { get; set; }
-        public string Nom { get; set; }
+        public int id { get; set; }
+        public string nom { get; set; }
     }
 }

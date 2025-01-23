@@ -117,7 +117,7 @@
 
         <!-- Boutons -->
         <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Right" Margin="20">
-            <Button Content="Ajouter" Width="120" Height="40"/>
+            <Button Content="Ajouter" Width="120" Height="40" Click="AjouterButton_Click"/>
             <Button Content="Modifier" Width="120" Height="40"/>
             <Button Content="Supprimer" Command="{Binding DeleteCommand}" Width="120" IsEnabled="{Binding SelectedSalarie, Converter={StaticResource IsNullToBoolConverter}}" />
         </StackPanel>
