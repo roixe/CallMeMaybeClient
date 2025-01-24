@@ -3,10 +3,15 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:local="clr-namespace:CallMeMaybeClient.Views"
         Title="CallMeMaybe" Height="450" Width="874">
-    <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition/>
-        </Grid.ColumnDefinitions>
+
+    <DockPanel>
+        <!-- Barre de navigation en haut -->
+        <StackPanel Orientation="Horizontal" DockPanel.Dock="Top" Background="LightGray" Height="50">
+            <Button Content="Salaries" Width="100" Margin="10" Click="NavigateToSalaries"/>
+            <Button Content="Services" Width="100" Margin="10" Click="NavigateToServices"/>
+            <Button Content="Sites" Width="100" Margin="10" Click="NavigateToSites"/>
+        </StackPanel>
         <Frame x:Name="MainFrame" NavigationUIVisibility="Hidden" />
-    </Grid>
+
+    </DockPanel>
 </Window>

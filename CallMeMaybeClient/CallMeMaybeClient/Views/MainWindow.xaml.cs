@@ -30,6 +30,21 @@ namespace CallMeMaybeClient.Views
 
         }
 
+        private void NavigateToSalaries(object sender, RoutedEventArgs e)
+        {
+            MainFrame.Navigate(new SalariePage());
+        }
+
+        private void NavigateToServices(object sender, RoutedEventArgs e)
+        {
+            MainFrame.Navigate(new ServicePage());
+        }
+
+        private void NavigateToSites(object sender, RoutedEventArgs e)
+        {
+            MainFrame.Navigate(new SitePage()); // Ajoutez une Page3.xaml si besoin
+        }
+
         private void MainWindow_KeyDown(object sender, KeyEventArgs e)
         {
             _pressedKeys.Add(e.Key);
