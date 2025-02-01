@@ -23,7 +23,7 @@ namespace CallMeMaybeClient.Views
         public AddServiceWindow()
         {
             InitializeComponent();
-            this.DataContext = new AddSalarieViewModel();
+            this.DataContext = new AddServiceViewModel();
 
 
 

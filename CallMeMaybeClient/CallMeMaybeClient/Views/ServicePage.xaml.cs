@@ -53,6 +53,8 @@ namespace CallMeMaybeClient.Views
             {
                 try
             {
+                string customHeaderValue = "CallMeMaybe";
+                client.DefaultRequestHeaders.Add("X-App-Identifier", customHeaderValue);
                 string url = $"http://localhost:5164/api/service/update/{service.id}";
                 var content = new StringContent(JsonSerializer.Serialize(service), Encoding.UTF8, "application/json");
                 var response = await client.PutAsync(url, content);

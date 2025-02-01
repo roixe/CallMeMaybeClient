@@ -101,6 +101,9 @@ public class SalarieViewModel : BaseViewModel
         {
             using HttpClient client = new HttpClient();
 
+            string customHeaderValue = "CallMeMaybe";
+            client.DefaultRequestHeaders.Add("X-App-Identifier", customHeaderValue);
+
             // Charger les salariés
             HttpResponseMessage salariesResponse = await client.GetAsync("http://localhost:5164/api/salarie/get/all");
             salariesResponse.EnsureSuccessStatusCode();
@@ -149,6 +152,8 @@ public class SalarieViewModel : BaseViewModel
             try
             {
                 using HttpClient client = new HttpClient();
+                string customHeaderValue = "CallMeMaybe";
+                client.DefaultRequestHeaders.Add("X-App-Identifier", customHeaderValue);
                 HttpResponseMessage response = await client.DeleteAsync($"http://localhost:5164/api/salarie/delete/{SelectedSalarie.id}");
                 if (response.IsSuccessStatusCode)
                 {

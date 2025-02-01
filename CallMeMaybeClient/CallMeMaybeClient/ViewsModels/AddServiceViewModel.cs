@@ -50,8 +50,12 @@ namespace CallMeMaybeClient.ViewsModels
         {
             try
             {
-
-                var servicesResponse = await _httpClient.GetStringAsync("http://localhost:5164/api/service/get/all");
+                HttpClient client = new HttpClient();
+                string customHeaderValue = "CallMeMaybe";
+                client.DefaultRequestHeaders.Add("X-App-Identifier", customHeaderValue);
+                
+                
+                var servicesResponse = await client.GetStringAsync("http://localhost:5164/api/service/get/all");
 
                 var services = JsonSerializer.Deserialize<List<Service>>(servicesResponse);
 
@@ -77,12 +81,14 @@ namespace CallMeMaybeClient.ViewsModels
         {
             try
             {
-
+                HttpClient client = new HttpClient();
+                string customHeaderValue = "CallMeMaybe";
+                client.DefaultRequestHeaders.Add("X-App-Identifier", customHeaderValue);
                 var url = "http://localhost:5164/api/service/create";
                 var json = JsonSerializer.Serialize(NewService);
                 var content = new StringContent(json, Encoding.UTF8, "application/json");
 
-                var response = await _httpClient.PostAsync(url, content);
+                var response = await client.PostAsync(url, content);
 
 
                 if (response.IsSuccessStatusCode)
