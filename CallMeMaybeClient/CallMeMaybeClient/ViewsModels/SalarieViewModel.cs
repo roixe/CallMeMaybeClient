@@ -36,7 +36,7 @@ public class SalarieViewModel : BaseViewModel
         set
         {
             _services = value;
-            OnPropertyChanged();
+            OnPropertyChanged(nameof(Services));
         }
     }
 
@@ -46,7 +46,7 @@ public class SalarieViewModel : BaseViewModel
         set
         {
             _sites = value;
-            OnPropertyChanged();
+            OnPropertyChanged(nameof(Sites));
         }
     }
 

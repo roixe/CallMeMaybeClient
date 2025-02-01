@@ -6,8 +6,8 @@
         <TextBlock Name="MessageText" Margin="10" />
         <PasswordBox Name="PasswordBox" Margin="10" />
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="10">
-            <Button Content="OK" Name="OkButton" Width="85"  />
-            <Button Content="Annuler" Name="CancelButton" Width="85"  />
+            <Button Content="OK" Name="OkButton" Width="85" Click="OkButton_Click"/>
+            <Button Content="Annuler" IsCancel="True"  />
         </StackPanel>
     </StackPanel>
 </Window>

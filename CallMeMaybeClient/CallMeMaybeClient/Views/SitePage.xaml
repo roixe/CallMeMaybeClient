@@ -2,12 +2,14 @@
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:local="clr-namespace:CallMeMaybeClient.ViewsModels"
+      xmlns:services="clr-namespace:CallMeMaybeClient.Services"
       xmlns:conv="clr-namespace:CallMeMaybeClient.Converters"
       Title="Liste des sites">
 
     <Page.Resources>
 
         <conv:IsNullToBoolConverter x:Key="IsNullToBoolConverter" />
+        <conv:RoleToVisibilityConverter x:Key="RoleToVisibilityConverter" />
         <!-- Couleurs principales -->
         <SolidColorBrush x:Key="PrimaryYellow" Color="#FFC107"/>
         <SolidColorBrush x:Key="AccentWhite" Color="#FFFFFF"/>
@@ -114,9 +116,9 @@
         <!-- Boutons -->
         <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Right" Margin="20">
             <Button Content="Rafraîchir" Width="120" Height="40" HorizontalAlignment="Center" VerticalAlignment="Center" Click="Refresh_Click"/>
-            <Button Content="Ajouter" Width="120" Height="40" Click="AjouterButton_Click"/>
-            <Button Content="Modifier" Width="120" Height="40"/>
-            <Button Content="Supprimer" Command="{Binding DeleteCommand}" Width="120" IsEnabled="{Binding SelectedSite, Converter={StaticResource IsNullToBoolConverter}}" />
+            <Button Content="Ajouter" Width="120" Height="40" Click="AjouterButton_Click" Visibility="{Binding Source={x:Static services:RoleManager.CurrentRole}, Converter={StaticResource RoleToVisibilityConverter}}"/>
+            <Button Content="Modifier" Width="120" Height="40" Visibility="{Binding Source={x:Static services:RoleManager.CurrentRole}, Converter={StaticResource RoleToVisibilityConverter}}"/>
+            <Button Content="Supprimer" Command="{Binding DeleteCommand}" Width="120" Visibility="{Binding Source={x:Static services:RoleManager.CurrentRole}, Converter={StaticResource RoleToVisibilityConverter}}" IsEnabled="{Binding SelectedSite, Converter={StaticResource IsNullToBoolConverter}}" />
         </StackPanel>
 
 
