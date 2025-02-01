@@ -197,4 +197,11 @@ public class SalarieViewModel : BaseViewModel
     {
         return SelectedSalarie != null;
     }
+    //forcer le refresh des colonnes services/sites pour éviter les problème d'affichage
+    public void RefreshGrid()
+    {
+        var tempSalaries = Salaries;
+        Salaries = null;
+        Salaries = tempSalaries;
+    }
 }

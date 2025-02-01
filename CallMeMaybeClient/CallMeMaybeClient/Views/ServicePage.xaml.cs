@@ -49,7 +49,9 @@ namespace CallMeMaybeClient.Views
         private async Task UpdateServiceAsync(Service service)
         {
             using HttpClient client = new HttpClient();
-            try
+            if (RoleManager.IsAdmin())
+            {
+                try
             {
                 string url = $"http://localhost:5164/api/service/update/{service.id}";
                 var content = new StringContent(JsonSerializer.Serialize(service), Encoding.UTF8, "application/json");
@@ -67,6 +69,11 @@ namespace CallMeMaybeClient.Views
             catch (Exception ex)
             {
                 MessageBox.Show($"Erreur : {ex.Message}", "Erreur", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            }
+            else
+            {
+                MessageBox.Show($"Vous n'êtes pas admin");
             }
         }
     }

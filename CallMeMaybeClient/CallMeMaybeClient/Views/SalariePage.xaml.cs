@@ -34,6 +34,7 @@ namespace CallMeMaybeClient.Views
         {
             // Appeler la méthode LoadDataAsync pour recharger les salariés
             await _viewModel.LoadDataAsync();
+            _viewModel.RefreshGrid();
         }
 
         private void AjouterButton_Click(object sender, RoutedEventArgs e)
