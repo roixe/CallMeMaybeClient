@@ -90,7 +90,6 @@ public class ServiceViewModel : BaseViewModel
         }
         catch (Exception ex)
         {
-            // Gérer les erreurs (ajoutez éventuellement des logs ou affichez un message d'erreur)
             MessageBox.Show($"Erreur lors du chargement des données : {ex.Message}", "Erreur", MessageBoxButton.OK, MessageBoxImage.Error);
         }
         finally

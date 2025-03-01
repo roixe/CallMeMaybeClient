@@ -45,7 +45,7 @@ namespace CallMeMaybeClient.Views
 
         private void NavigateToSites(object sender, RoutedEventArgs e)
         {
-            MainFrame.Navigate(new SitePage()); // Ajoutez une Page3.xaml si besoin
+            MainFrame.Navigate(new SitePage()); 
         }
 
         private void MainWindow_KeyDown(object sender, KeyEventArgs e)
