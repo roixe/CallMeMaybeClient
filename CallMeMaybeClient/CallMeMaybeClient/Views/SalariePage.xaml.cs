@@ -30,7 +30,7 @@ namespace CallMeMaybeClient.Views
             }
         }
 
-        private async void Refresh_Click(object sender, RoutedEventArgs e)
+        public async void Refresh_Click(object sender, RoutedEventArgs e)
         {
             // Appeler la méthode LoadDataAsync pour recharger les salariés
             await _viewModel.LoadDataAsync();

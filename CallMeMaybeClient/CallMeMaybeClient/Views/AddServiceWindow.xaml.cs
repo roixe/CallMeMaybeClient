@@ -35,8 +35,13 @@ namespace CallMeMaybeClient.Views
 
             // Ouvrir la fenêtre
             nouvelleFenetre.ShowDialog();
+
         }
 
+        private void AjouterServiceButton_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
 
     }
 }

@@ -44,6 +44,7 @@ namespace CallMeMaybeClient.ViewsModels
         public Salarie NewSalarie { get; set; }
         public ICommand CreerSalarieCommand { get; }
 
+
         public AddSalarieViewModel()
         {
            

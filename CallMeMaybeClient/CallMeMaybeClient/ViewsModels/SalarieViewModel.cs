@@ -94,6 +94,8 @@ public class SalarieViewModel : BaseViewModel
         DeleteCommand = new RelayCommand(async () => await OnDelete(), CanDelete);
     }
 
+
+
     public async Task LoadDataAsync()
     {
         IsLoading = true;
