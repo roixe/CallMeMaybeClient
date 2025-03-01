@@ -77,7 +77,8 @@ public class ServiceViewModel : BaseViewModel
         try
         {
             using HttpClient client = new HttpClient();
-
+            string customHeaderValue = "CallMeMaybe";
+            client.DefaultRequestHeaders.Add("X-App-Identifier", customHeaderValue);
             // Charger les services
             HttpResponseMessage servicesResponse = await client.GetAsync("http://localhost:5164/api/service/get/all");
             servicesResponse.EnsureSuccessStatusCode();
@@ -111,14 +112,16 @@ public class ServiceViewModel : BaseViewModel
             try
             {
                 using HttpClient client = new HttpClient();
-                HttpResponseMessage response = await client.DeleteAsync($"http://localhost:5164/api/site/delete/{SelectedService.id}");
+                string customHeaderValue = "CallMeMaybe";
+                client.DefaultRequestHeaders.Add("X-App-Identifier", customHeaderValue);
+                HttpResponseMessage response = await client.DeleteAsync($"http://localhost:5164/api/service/delete/{SelectedService.id}");
                 if (response.IsSuccessStatusCode)
                 {
                     _servicesList.Remove(SelectedService);
                     _servicesList = _servicesList ?? new List<Service>();
                     Services = new ObservableCollection<Service>(_servicesList);
 
-                    MessageBox.Show("Site supprimé avec succès.", "Succès", MessageBoxButton.OK, MessageBoxImage.Information);
+                    MessageBox.Show("service supprimé avec succès.", "Succès", MessageBoxButton.OK, MessageBoxImage.Information);
                 }
                 else
                 {
@@ -131,7 +134,7 @@ public class ServiceViewModel : BaseViewModel
                     }
                     else
                     {
-                        MessageBox.Show("Erreur lors de la suppression du site.", "Erreur", MessageBoxButton.OK, MessageBoxImage.Error);
+                        MessageBox.Show("Erreur lors de la suppression du service.", "Erreur", MessageBoxButton.OK, MessageBoxImage.Error);
                     }
                 }
             }

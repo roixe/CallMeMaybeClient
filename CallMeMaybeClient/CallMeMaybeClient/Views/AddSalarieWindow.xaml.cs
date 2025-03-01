@@ -11,6 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using CallMeMaybeClient.Models;
 using CallMeMaybeClient.ViewsModels;
 
 namespace CallMeMaybeClient.Views
@@ -20,6 +21,7 @@ namespace CallMeMaybeClient.Views
     /// </summary>
     public partial class AddSalarieWindow : Window
     {
+
         public AddSalarieWindow()
         {
             InitializeComponent();
@@ -35,7 +37,21 @@ namespace CallMeMaybeClient.Views
 
             // Ouvrir la fenêtre
             nouvelleFenetre.ShowDialog();
+            
+
         }
+
+        private void AnnulerButton_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
+
+        private void AjouterSalarieButton_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+            
+        }
+
 
 
     }

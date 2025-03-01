@@ -6,10 +6,29 @@ using System.Threading.Tasks;
 
 namespace CallMeMaybeClient.Services
 {
-    internal class RoleManager 
-    {
-        public static readonly string Visiteur;
-        public static readonly string Administration;
 
+        public static class RoleManager
+        {
+
+
+            public enum Role
+            {
+                User,
+                Admin
+            }
+
+            public static Role CurrentRole { get; private set; } = Role.User; // Par défaut : utilisateur standard
+
+            public static void SetRole(Role role)
+            {
+                CurrentRole = role;
+            }
+
+        public static bool IsAdmin()
+        {
+            return CurrentRole == Role.Admin;
+        }
     }
+
+    
 }

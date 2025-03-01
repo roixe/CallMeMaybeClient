@@ -9,7 +9,7 @@
     </Window.DataContext>
     <Grid>
         <!-- Placez ici le code XAML pour le formulaire d'ajout -->
-        <Grid Margin="10">
+        <Grid Margin="10,10,10,10">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
@@ -17,7 +17,8 @@
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
-                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto" />
@@ -51,26 +52,25 @@
 
             <!-- Service -->
             <TextBlock Text="Service :" VerticalAlignment="Center" Margin="5" Grid.Row="5" />
-            <TextBlock Text="Service :" VerticalAlignment="Center" Margin="5" Grid.Row="5" />
             <ComboBox Grid.Column="1" Grid.Row="5" Margin="5"
-          ItemsSource="{Binding Services}"
-          SelectedValue="{Binding NewSalarie.idService, Mode=TwoWay}"
-          SelectedValuePath="id"
-          DisplayMemberPath="nom" />
+                      ItemsSource="{Binding Services}"
+                      SelectedValue="{Binding NewSalarie.idService, Mode=TwoWay}"
+                      SelectedValuePath="id"
+                      DisplayMemberPath="nom" />
 
             <!-- Site -->
-
-            <TextBlock Text="Site :" VerticalAlignment="Top" Margin="0,13,10,0" Grid.Row="6" />
-            <ComboBox Grid.Column="1" Grid.Row="6" Margin="5,5,5,114"
-          ItemsSource="{Binding Sites}"
-          SelectedValue="{Binding NewSalarie.idSite, Mode=TwoWay}"
-          SelectedValuePath="id"
-          DisplayMemberPath="ville"/>
+            <TextBlock Text="Site :" VerticalAlignment="Center" Margin="5" Grid.Row="6"/>
+            <ComboBox Grid.Column="1" Grid.Row="6" Margin="5"
+                      ItemsSource="{Binding Sites}"
+                      SelectedValue="{Binding NewSalarie.idSite, Mode=TwoWay}"
+                      SelectedValuePath="id"
+                      DisplayMemberPath="ville"/>
 
             <!-- Bouton Ajouter -->
-            <Button Content="Ajouter" Grid.Row="7" Grid.ColumnSpan="2" Width="100" Height="30"
-                    HorizontalAlignment="Center" VerticalAlignment="Center"
-                    Command="{Binding CreerSalarieCommand}" />
+            <Button Content="Ajouter" Grid.Row="7" Grid.Column="1" Margin="5"
+                    HorizontalAlignment="Left" VerticalAlignment="Center"
+                    Command="{Binding CreerSalarieCommand}"
+                    Click="AjouterSalarieButton_Click"/>
         </Grid>
     </Grid>
 </Window>

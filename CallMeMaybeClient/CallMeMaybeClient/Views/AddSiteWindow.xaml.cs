@@ -37,6 +37,9 @@ namespace CallMeMaybeClient.Views
             nouvelleFenetre.ShowDialog();
         }
 
-
+        private void AjouterSiteButton_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
     }
 }

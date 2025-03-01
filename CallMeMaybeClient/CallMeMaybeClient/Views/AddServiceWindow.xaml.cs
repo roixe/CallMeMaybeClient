@@ -23,7 +23,7 @@ namespace CallMeMaybeClient.Views
         public AddServiceWindow()
         {
             InitializeComponent();
-            this.DataContext = new AddSalarieViewModel();
+            this.DataContext = new AddServiceViewModel();
 
 
 
@@ -35,8 +35,13 @@ namespace CallMeMaybeClient.Views
 
             // Ouvrir la fenêtre
             nouvelleFenetre.ShowDialog();
+
         }
 
+        private void AjouterServiceButton_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
 
     }
 }

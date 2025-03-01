@@ -36,7 +36,7 @@ public class SalarieViewModel : BaseViewModel
         set
         {
             _services = value;
-            OnPropertyChanged();
+            OnPropertyChanged(nameof(Services));
         }
     }
 
@@ -46,7 +46,7 @@ public class SalarieViewModel : BaseViewModel
         set
         {
             _sites = value;
-            OnPropertyChanged();
+            OnPropertyChanged(nameof(Sites));
         }
     }
 
@@ -94,12 +94,17 @@ public class SalarieViewModel : BaseViewModel
         DeleteCommand = new RelayCommand(async () => await OnDelete(), CanDelete);
     }
 
+
+
     public async Task LoadDataAsync()
     {
         IsLoading = true;
         try
         {
             using HttpClient client = new HttpClient();
+
+            string customHeaderValue = "CallMeMaybe";
+            client.DefaultRequestHeaders.Add("X-App-Identifier", customHeaderValue);
 
             // Charger les salariés
             HttpResponseMessage salariesResponse = await client.GetAsync("http://localhost:5164/api/salarie/get/all");
@@ -149,6 +154,8 @@ public class SalarieViewModel : BaseViewModel
             try
             {
                 using HttpClient client = new HttpClient();
+                string customHeaderValue = "CallMeMaybe";
+                client.DefaultRequestHeaders.Add("X-App-Identifier", customHeaderValue);
                 HttpResponseMessage response = await client.DeleteAsync($"http://localhost:5164/api/salarie/delete/{SelectedSalarie.id}");
                 if (response.IsSuccessStatusCode)
                 {
@@ -196,5 +203,12 @@ public class SalarieViewModel : BaseViewModel
     private bool CanDelete()
     {
         return SelectedSalarie != null;
+    }
+    //forcer le refresh des colonnes services/sites pour éviter les problème d'affichage
+    public void RefreshGrid()
+    {
+        var tempSalaries = Salaries;
+        Salaries = null;
+        Salaries = tempSalaries;
     }
 }

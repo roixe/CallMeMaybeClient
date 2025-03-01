@@ -77,7 +77,8 @@ public class SiteViewModel : BaseViewModel
         try
         {
             using HttpClient client = new HttpClient();
-
+            string customHeaderValue = "CallMeMaybe";
+            client.DefaultRequestHeaders.Add("X-App-Identifier", customHeaderValue);
             // Charger les Sites
             HttpResponseMessage SitesResponse = await client.GetAsync("http://localhost:5164/api/site/get/all");
             SitesResponse.EnsureSuccessStatusCode();
@@ -112,6 +113,8 @@ public class SiteViewModel : BaseViewModel
             try
             {
                 using HttpClient client = new HttpClient();
+                string customHeaderValue = "CallMeMaybe";
+                client.DefaultRequestHeaders.Add("X-App-Identifier", customHeaderValue);
                 HttpResponseMessage response = await client.DeleteAsync($"http://localhost:5164/api/site/delete/{SelectedSite.id}");
 
                 if (response.IsSuccessStatusCode)

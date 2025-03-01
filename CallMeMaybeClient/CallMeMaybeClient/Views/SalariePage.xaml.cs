@@ -4,6 +4,7 @@ using System.Text.Json;
 using System.Text;
 using System.Windows.Controls;
 using System.Windows;
+using CallMeMaybeClient.Services;
 
 namespace CallMeMaybeClient.Views
 {
@@ -15,7 +16,11 @@ namespace CallMeMaybeClient.Views
             InitializeComponent();
             _viewModel = new SalarieViewModel();
             this.DataContext = _viewModel;
+            AdminButtonVisibility = RoleManager.IsAdmin() ? Visibility.Visible : Visibility.Collapsed;
+
         }
+
+        public Visibility AdminButtonVisibility { get; set; }
 
         private async void DataGrid_RowEditEnding(object sender, DataGridRowEditEndingEventArgs e)
         {
@@ -25,10 +30,11 @@ namespace CallMeMaybeClient.Views
             }
         }
 
-        private async void Refresh_Click(object sender, RoutedEventArgs e)
+        public async void Refresh_Click(object sender, RoutedEventArgs e)
         {
             // Appeler la méthode LoadDataAsync pour recharger les salariés
             await _viewModel.LoadDataAsync();
+            _viewModel.RefreshGrid();
         }
 
         private void AjouterButton_Click(object sender, RoutedEventArgs e)
@@ -43,24 +49,33 @@ namespace CallMeMaybeClient.Views
         private async Task UpdateSalarieAsync(Salarie salarie)
         {
             using HttpClient client = new HttpClient();
-            try
+            if (RoleManager.IsAdmin())
             {
-                string url = $"http://localhost:5164/api/salarie/update/{salarie.id}";
-                var content = new StringContent(JsonSerializer.Serialize(salarie), Encoding.UTF8, "application/json");
-                var response = await client.PutAsync(url, content);
+                try
+                {
+                    string customHeaderValue = "CallMeMaybe";
+                    client.DefaultRequestHeaders.Add("X-App-Identifier", customHeaderValue);
+                    string url = $"http://localhost:5164/api/salarie/update/{salarie.id}";
+                    var content = new StringContent(JsonSerializer.Serialize(salarie), Encoding.UTF8, "application/json");
+                    var response = await client.PutAsync(url, content);
 
-                if (response.IsSuccessStatusCode)
-                {
-                    MessageBox.Show("Mise à jour réussie.", "Succès", MessageBoxButton.OK, MessageBoxImage.Information);
+                    if (response.IsSuccessStatusCode)
+                    {
+                        MessageBox.Show("Mise à jour réussie.", "Succès", MessageBoxButton.OK, MessageBoxImage.Information);
+                    }
+                    else
+                    {
+                        MessageBox.Show($"Erreur lors de la mise à jour : {response.ReasonPhrase}", "Erreur", MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
                 }
-                else
+                catch (Exception ex)
                 {
-                    MessageBox.Show($"Erreur lors de la mise à jour : {response.ReasonPhrase}", "Erreur", MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show($"Erreur : {ex.Message}", "Erreur", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
-            catch (Exception ex)
+            else
             {
-                MessageBox.Show($"Erreur : {ex.Message}", "Erreur", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show($"Vous n'êtes pas admin");
             }
         }
     }

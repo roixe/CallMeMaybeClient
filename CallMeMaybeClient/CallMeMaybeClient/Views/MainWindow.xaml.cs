@@ -9,7 +9,9 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using CallMeMaybeClient.Services;
 using CallMeMaybeClient.Views;
+using static CallMeMaybeClient.Services.RoleManager;
 
 
 namespace CallMeMaybeClient.Views
@@ -27,6 +29,7 @@ namespace CallMeMaybeClient.Views
             InitializeComponent();
             MainFrame.Navigate(new SalariePage());
             this.KeyDown += MainWindow_KeyDown; // Capture de la touche pressée
+
 
         }
 
@@ -58,7 +61,17 @@ namespace CallMeMaybeClient.Views
             {
                 var adminWindow = new InputDialogueAdmin();
                 adminWindow.ShowDialog();
+
+                    MainWindow newWindow = new MainWindow();
+                    Application.Current.MainWindow = newWindow;
+                    this.Visibility = System.Windows.Visibility.Collapsed;
+                    newWindow.Show();
+
+
+                
+
             }
         }
     }
 }
+
