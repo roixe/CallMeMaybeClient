@@ -18,6 +18,9 @@ namespace CallMeMaybeClient.ViewsModels
     {
         private readonly HttpClient _httpClient;
 
+        public event Action<Service> ServiceAdded;
+
+
         private ObservableCollection<Service> _services;
         public ObservableCollection<Service> Services
         {
@@ -95,6 +98,7 @@ namespace CallMeMaybeClient.ViewsModels
                 {
                     MessageBox.Show("Le service a été créé avec succès !");
 
+                    ServiceAdded?.Invoke(NewService);
 
 
                 }

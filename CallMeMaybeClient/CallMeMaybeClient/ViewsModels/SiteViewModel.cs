@@ -167,4 +167,11 @@ public class SiteViewModel : BaseViewModel
     {
         return SelectedSite != null;
     }
+
+    public void RefreshGrid()
+    {
+        var tempSites = Sites;
+        Sites = null;
+        Sites = tempSites;
+    }
 }

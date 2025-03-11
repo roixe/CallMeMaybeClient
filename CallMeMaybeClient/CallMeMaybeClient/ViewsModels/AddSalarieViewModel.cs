@@ -16,6 +16,7 @@ namespace CallMeMaybeClient.ViewsModels
 
     public class AddSalarieViewModel: BaseViewModel
     {
+        public event Action<Salarie> SalarieAdded;
         private readonly HttpClient _httpClient;
 
         private ObservableCollection<Service> _services;
@@ -115,7 +116,7 @@ namespace CallMeMaybeClient.ViewsModels
                 {
                     MessageBox.Show("Le salarié a été créé avec succès !");
 
-                    
+                    SalarieAdded?.Invoke(NewSalarie);
 
                 }
                 else
@@ -123,6 +124,8 @@ namespace CallMeMaybeClient.ViewsModels
                     var error = await response.Content.ReadAsStringAsync();
                     MessageBox.Show($"Erreur : {error}" + response.StatusCode);
                 }
+
+
             }
             catch (Exception ex)
             {

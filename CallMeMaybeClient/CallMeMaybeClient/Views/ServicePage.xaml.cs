@@ -5,6 +5,7 @@ using System.Text;
 using System.Windows.Controls;
 using System.Windows;
 using CallMeMaybeClient.Services;
+using CallMeMaybeClient.ViewsModels;
 
 namespace CallMeMaybeClient.Views
 {
@@ -40,11 +41,19 @@ namespace CallMeMaybeClient.Views
         private void AjouterButton_Click(object sender, RoutedEventArgs e)
         {
             // Instancier la nouvelle fenêtre
-            var nouvelleFenetre = new AddServiceWindow();
+            var addServiceWindow = new AddServiceWindow();
+            if (addServiceWindow.DataContext is AddServiceViewModel addServiceVM)
+            {
+                addServiceVM.ServiceAdded += async (_) =>
+                {
+                    await _viewModel.LoadDataAsync();
+                    _viewModel.RefreshGrid();           //  Recharge toute la liste après ajout
+                };
+            }
 
-            // Ouvrir la fenêtre
-            nouvelleFenetre.ShowDialog();
+            addServiceWindow.ShowDialog();
         }
+
 
         private async Task UpdateServiceAsync(Service service)
         {
