@@ -86,5 +86,10 @@ namespace CallMeMaybeClient.Views
                 MessageBox.Show($"Vous n'êtes pas admin");
             }
         }
+
+        public void AjouterButton_Click(object value1, object value2)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
