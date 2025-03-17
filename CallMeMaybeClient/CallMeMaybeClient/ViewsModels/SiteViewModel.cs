@@ -104,7 +104,7 @@ public class SiteViewModel : BaseViewModel
             return;
 
         var result = MessageBox.Show(
-            $"Voulez-vous vraiment supprimer {SelectedSite.ville} ? Tous les employés affectés à ce site n'auront plus de site associé.",
+            $"Voulez-vous vraiment supprimer {SelectedSite.ville} ?",
             "Confirmation", MessageBoxButton.YesNo, MessageBoxImage.Warning);
 
         if (result == MessageBoxResult.Yes)

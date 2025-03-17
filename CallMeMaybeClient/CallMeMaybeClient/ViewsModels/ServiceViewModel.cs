@@ -103,7 +103,7 @@ public class ServiceViewModel : BaseViewModel
         if (SelectedService == null)
             return;
 
-        var result = MessageBox.Show($"Voulez-vous vraiment supprimer {SelectedService.nom} ?, tous les employés affecté à ce service n'auront plus  de service associé",
+        var result = MessageBox.Show($"Voulez-vous vraiment supprimer {SelectedService.nom} ?",
             "Confirmation", MessageBoxButton.YesNo, MessageBoxImage.Warning);
 
         if (result == MessageBoxResult.Yes)
