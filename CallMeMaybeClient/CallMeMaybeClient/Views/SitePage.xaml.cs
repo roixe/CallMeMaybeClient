@@ -5,6 +5,7 @@ using System.Text;
 using System.Windows.Controls;
 using System.Windows;
 using CallMeMaybeClient.Services;
+using CallMeMaybeClient.ViewsModels;
 
 namespace CallMeMaybeClient.Views
 {
@@ -34,11 +35,19 @@ namespace CallMeMaybeClient.Views
 
         private void AjouterButton_Click(object sender, RoutedEventArgs e)
         {
-            // Instancier la nouvelle fenêtre
-            var nouvelleFenetre = new AddSiteWindow();
+            {
+                var addSiteWindow = new AddSiteWindow();
+                if (addSiteWindow.DataContext is AddSiteViewModel addSiteVM)
+                {
+                    addSiteVM.SiteAdded += async (_) =>
+                    {
+                        await _viewModel.LoadDataAsync();
+                        _viewModel.RefreshGrid();           //  Recharge toute la liste après ajout
+                    };
+                }
 
-            // Ouvrir la fenêtre
-            nouvelleFenetre.ShowDialog();
+                addSiteWindow.ShowDialog();
+            }
         }
 
         private async Task UpdateSiteAsync(Site site)

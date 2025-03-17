@@ -162,4 +162,11 @@ public class ServiceViewModel : BaseViewModel
     {
         return SelectedService != null;
     }
+
+    public void RefreshGrid()
+    {
+        var tempServices = Services;
+        Services = null;
+        Services = tempServices;
+    }
 }

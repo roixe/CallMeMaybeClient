@@ -30,16 +30,7 @@ namespace CallMeMaybeClient.Views
 
 
         }
-        private void AjouterButton_Click(object sender, RoutedEventArgs e)
-        {
-            // Instancier la nouvelle fenêtre
-            var nouvelleFenetre = new AddSalarieWindow();
 
-            // Ouvrir la fenêtre
-            nouvelleFenetre.ShowDialog();
-            
-
-        }
 
         private void AnnulerButton_Click(object sender, RoutedEventArgs e)
         {

@@ -28,14 +28,6 @@ namespace CallMeMaybeClient.Views
 
 
         }
-        private void AjouterButton_Click(object sender, RoutedEventArgs e)
-        {
-            // Instancier la nouvelle fenêtre
-            var nouvelleFenetre = new AddSiteWindow();
-
-            // Ouvrir la fenêtre
-            nouvelleFenetre.ShowDialog();
-        }
 
         private void AjouterSiteButton_Click(object sender, RoutedEventArgs e)
         {

@@ -5,6 +5,7 @@ using System.Text;
 using System.Windows.Controls;
 using System.Windows;
 using CallMeMaybeClient.Services;
+using CallMeMaybeClient.ViewsModels;
 
 namespace CallMeMaybeClient.Views
 {
@@ -39,12 +40,19 @@ namespace CallMeMaybeClient.Views
 
         private void AjouterButton_Click(object sender, RoutedEventArgs e)
         {
-            // Instancier la nouvelle fenêtre
-            var nouvelleFenetre = new AddSalarieWindow();
+            var addSalarieWindow = new AddSalarieWindow();
+            if (addSalarieWindow.DataContext is AddSalarieViewModel addSalarieVM)
+            {
+                addSalarieVM.SalarieAdded += async (_) =>
+                {
+                    await _viewModel.LoadDataAsync();
+                    _viewModel.RefreshGrid();           //  Recharge toute la liste après ajout
+                };
+            }
 
-            // Ouvrir la fenêtre
-            nouvelleFenetre.ShowDialog();
+            addSalarieWindow.ShowDialog();
         }
+
 
         private async Task UpdateSalarieAsync(Salarie salarie)
         {
@@ -77,6 +85,11 @@ namespace CallMeMaybeClient.Views
             {
                 MessageBox.Show($"Vous n'êtes pas admin");
             }
+        }
+
+        public void AjouterButton_Click(object value1, object value2)
+        {
+            throw new NotImplementedException();
         }
     }
 }

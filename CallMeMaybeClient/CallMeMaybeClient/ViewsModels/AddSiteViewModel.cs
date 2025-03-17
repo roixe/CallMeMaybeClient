@@ -18,6 +18,9 @@ namespace CallMeMaybeClient.ViewsModels
     {
         private readonly HttpClient _httpClient;
 
+        public event Action<Site> SiteAdded;
+
+
         private ObservableCollection<Site> _sites;
         public ObservableCollection<Site> Sites
         {
@@ -92,6 +95,8 @@ namespace CallMeMaybeClient.ViewsModels
                 if (response.IsSuccessStatusCode)
                 {
                     MessageBox.Show("Le Site a été créé avec succès !");
+
+                    SiteAdded?.Invoke(NewSite);
 
 
 
